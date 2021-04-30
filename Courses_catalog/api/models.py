@@ -1,3 +1,9 @@
 from django.db import models
 
-# Create your models here.
+
+# Creating our courses model
+class Courses(models.Model):
+    name = models.CharField(max_length=120)
+    start_date = models.DateField(null=True, blank=True)
+    end_date = models.DateField(null=True, blank=True)
+    amount = models.IntegerField(blank=True, null=True)
