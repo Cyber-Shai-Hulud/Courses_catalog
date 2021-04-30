@@ -1,3 +1,13 @@
 from django.contrib import admin
+from .models import Courses
 
-# Register your models here.
+
+# Register our model in admin.
+class CoursesAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name', 'start_data', 'end_date', 'amount')
+    list_display_links = ('id', 'name')
+    search_fields = ('name',)
+    list_filter = ('start_date', 'end_date')
+
+
+admin.site.register(Courses, CoursesAdmin)
