@@ -7,3 +7,6 @@ class Courses(models.Model):
     start_date = models.DateField(null=True, blank=True)
     end_date = models.DateField(null=True, blank=True)
     amount = models.IntegerField(blank=True, null=True)
+
+    def __str__(self):
+        return self.name
