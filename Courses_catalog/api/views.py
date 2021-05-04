@@ -1,19 +1,22 @@
-from .serializers import CoursesSerializer, CoursesListSerializer
+from .serializers import CoursesSerializer
 from .models import Courses
-from rest_framework import generics, filters
+from rest_framework.filters import SearchFilter, OrderingFilter
+from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveUpdateDestroyAPIView
 from django_filters.rest_framework import DjangoFilterBackend
-from .filters import CoursesFilter
 
 
-class CoursesDetailView(generics.RetrieveUpdateDestroyAPIView):
+# Create view for single course view
+class CoursesDetailView(RetrieveUpdateDestroyAPIView):
     queryset = Courses.objects.all()
     serializer_class = CoursesSerializer
     lookup_url_kwarg = 'id'
 
 
-class CoursesListView(generics.ListCreateAPIView):
+# Create view for list course view
+class CoursesListView(ListAPIView, CreateAPIView):
     queryset = Courses.objects.all()
-    serializer_class = CoursesListSerializer
-    filter_backends = [filters.SearchFilter, DjangoFilterBackend]
+    serializer_class = CoursesSerializer
+    filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]
     search_fields = ['name']
-    filter_class = CoursesFilter
+    filterset_fields = ['start_date', 'end_date']
+    ordering_fields = ['start_date']
